@@ -1738,3 +1738,42 @@ main.home-is-active {
     .member-photo__icon { width: 56px; height: 56px; }
     .member-info        { padding: 1.6rem 1.4rem; }
 }
+/* 인트로 화면 스타일 */
+#intro-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0a0a0a; /* 사이트 배경색과 비슷하게 설정 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* 화면 최상단으로 배치 */
+  transition: opacity 0.8s ease; /* 부드럽게 사라지는 효과 */
+}
+
+/* 입장 버튼 스타일 */
+#enter-btn {
+  margin-top: 30px;
+  padding: 10px 30px;
+  background: transparent;
+  color: var(--copper); /* 기존 테마에 있던 구리색 변수 활용 */
+  border: 1px solid var(--copper);
+  cursor: pointer;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  transition: 0.3s;
+}
+
+#enter-btn:hover {
+  background: var(--copper);
+  color: #000;
+}
+
+/* 인트로 화면이 사라질 때 쓸 클래스 */
+.fade-out {
+  opacity: 0;
+  pointer-events: none; /* 클릭 방해 금지 */
+}
