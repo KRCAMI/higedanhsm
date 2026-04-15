@@ -1,0 +1,482 @@
+/* ============================================================
+   Official HIGE DANdism — style.css
+   ULTRA LUXURY EDITION 2026
+   ============================================================ */
+
+
+/* ============================================================
+   1. CSS 변수 (Design Tokens)
+   ============================================================ */
+:root {
+    /* ── Color Palette ───────────────────────────────────── */
+    --bg:            #020406;
+    --surface:       #070C14;
+    --surface-2:     #0B1521;
+    --surface-3:     rgba(7, 12, 20, 0.6);
+
+    --border:        rgba(0, 200, 240, 0.10);
+    --border-bright: rgba(0, 200, 240, 0.42);
+    --border-gold:   rgba(201, 168, 76, 0.35);
+    --border-subtle: rgba(240, 234, 214, 0.06);
+
+    --cyan:          #00C8F0;
+    --cyan-dim:      rgba(0, 200, 240, 0.55);
+    --cyan-glow:     rgba(0, 200, 240, 0.09);
+    --cyan-glow-lg:  rgba(0, 200, 240, 0.05);
+
+    --copper:        #CC7A4A;
+    --copper-dim:    rgba(204, 122, 74, 0.70);
+    --copper-glow:   rgba(204, 122, 74, 0.08);
+
+    --gold:          #C9A84C;
+    --gold-dim:      rgba(201, 168, 76, 0.70);
+    --gold-glow:     rgba(201, 168, 76, 0.08);
+    --gold-glow-lg:  rgba(201, 168, 76, 0.04);
+
+    --cream:         #F0EAD6;
+    --cream-muted:   rgba(240, 234, 214, 0.58);
+    --cream-dim:     rgba(240, 234, 214, 0.26);
+
+    /* ── Typography ──────────────────────────────────────── */
+    --font-display:  'Bebas Neue', 'Arial Black', sans-serif;
+    --font-serif:    'Cormorant Garamond', Georgia, serif;
+    --font-mono:     'JetBrains Mono', 'Courier New', monospace;
+    --font-jp:       'Shippori Mincho', serif;
+
+    /* ── Spacing ─────────────────────────────────────────── */
+    --space-xs:  0.4rem;
+    --space-sm:  0.9rem;
+    --space-md:  1.8rem;
+    --space-lg:  3.5rem;
+    --space-xl:  7rem;
+
+    /* ── Animation ───────────────────────────────────────── */
+    --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+    --dur-fast:    160ms;
+    --dur-base:    320ms;
+    --dur-slow:    600ms;
+    --dur-xslow:   1000ms;
+
+    /* ── Layout ──────────────────────────────────────────── */
+    --max-width: 1200px;
+    --header-h:  76px;
+    --marquee-h: 30px;
+}
+
+
+/* ============================================================
+   2. Reset & Base
+   ============================================================ */
+*, *::before, *::after {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--cream);
+    font-family: var(--font-mono);
+    overflow-x: hidden;
+    cursor: none;
+}
+
+[hidden] { display: none !important; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
+
+/* Selection */
+::selection { background: var(--gold); color: var(--bg); }
+
+
+/* ============================================================
+   3. Loader — 풀스크린 인트로
+   ============================================================ */
+.loader {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    overflow: hidden;
+    transition: opacity 1s var(--ease-out), visibility 1s;
+}
+
+.loader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-badge {
+    font-family: var(--font-mono);
+    font-size: 0.75rem; /* 원본 0.52rem */
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    animation: loaderFadeIn 0.8s var(--ease-out) 0s both;
+}
+
+.loader-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 10vw, 8rem);
+    letter-spacing: 0.15em;
+    color: var(--cream);
+    display: flex;
+    overflow: hidden;
+    line-height: 1;
+}
+
+.loader-title span {
+    display: inline-block;
+    animation: loaderLetterIn 0.7s var(--ease-out) both;
+}
+.loader-title span:nth-child(1)  { animation-delay: 0.05s; }
+.loader-title span:nth-child(2)  { animation-delay: 0.10s; }
+.loader-title span:nth-child(3)  { animation-delay: 0.15s; }
+.loader-title span:nth-child(4)  { animation-delay: 0.20s; }
+.loader-title span:nth-child(5)  { animation-delay: 0.25s; }
+.loader-title span:nth-child(6)  { animation-delay: 0.30s; }
+.loader-title span:nth-child(7)  { animation-delay: 0.35s; }
+.loader-title span:nth-child(8)  { animation-delay: 0.40s; }
+.loader-title span:nth-child(9)  { animation-delay: 0.45s; }
+.loader-title span:nth-child(10) { animation-delay: 0.50s; }
+.loader-title span:nth-child(11) { animation-delay: 0.55s; }
+.loader-title span:nth-child(12) { animation-delay: 0.60s; }
+
+.loader-gap { width: 0.3em; }
+
+@keyframes loaderLetterIn {
+    from { opacity: 0; transform: translateY(50px) skewY(8deg); }
+    to   { opacity: 1; transform: none; }
+}
+
+.loader-sub {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: var(--cyan-dim);
+    animation: loaderFadeIn 0.8s var(--ease-out) 0.75s both;
+}
+
+@keyframes loaderFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* Progress bar at the very bottom */
+.loader-bar {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--cyan), var(--gold));
+    animation: loaderProgress 2s var(--ease-out) 0.2s both;
+}
+
+@keyframes loaderProgress {
+    from { width: 0; }
+    to   { width: 100%; }
+}
+
+
+/* ============================================================
+   4. Particle Canvas
+   ============================================================ */
+.particle-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+
+/* ============================================================
+   5. Custom Cursor
+   ============================================================ */
+.cursor, .cursor-ring {
+    position: fixed;
+    pointer-events: none;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99999;
+    will-change: left, top;
+}
+
+.cursor {
+    width: 6px; height: 6px;
+    background: var(--cyan);
+    mix-blend-mode: screen;
+    transition: width var(--dur-base) var(--ease-out),
+                height var(--dur-base) var(--ease-out),
+                opacity var(--dur-fast),
+                background var(--dur-base);
+}
+
+.cursor-ring {
+    width: 30px; height: 30px;
+    border: 1px solid rgba(0, 200, 240, 0.45);
+    z-index: 99998;
+    transition: width var(--dur-base) var(--ease-out),
+                height var(--dur-base) var(--ease-out),
+                opacity var(--dur-base);
+}
+
+.cursor--expanded      { width: 14px; height: 14px; background: var(--gold); }
+.cursor-ring--expanded { width: 50px; height: 50px; opacity: 0.18; }
+
+
+/* ============================================================
+   6. Grain Overlay
+   ============================================================ */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+    pointer-events: none;
+    z-index: 9000;
+    opacity: 0.42;
+    mix-blend-mode: overlay;
+}
+
+
+/* ============================================================
+   7. Ambient Glow
+   ============================================================ */
+.ambient {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background:
+        radial-gradient(ellipse 65% 55% at 12% 88%, rgba(0,200,240,0.055) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 42% at 88% 12%, rgba(0,200,240,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse 35% 28% at 55% 55%, rgba(201,168,76,0.025) 0%, transparent 65%);
+}
+
+
+/* ============================================================
+   8. Video Background
+   ============================================================ */
+.video-background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.video-foreground {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 100vw; height: 56.25vw;
+    min-height: 100vh; min-width: 177.78vh;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.video-foreground--local video {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 100vw; height: 56.25vw;
+    min-height: 100vh; min-width: 177.78vh;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    pointer-events: none;
+}
+
+#player { width: 100%; height: 100%; }
+
+.video-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    background:
+        linear-gradient(180deg,
+            rgba(2,4,6,0.94) 0%,
+            rgba(2,4,6,0.60) 30%,
+            rgba(2,4,6,0.68) 70%,
+            rgba(2,4,6,0.96) 100%
+        ),
+        linear-gradient(100deg,
+            rgba(2,4,6,0.55) 0%,
+            transparent 55%,
+            rgba(2,4,6,0.25) 100%
+        );
+}
+
+
+/* ============================================================
+   9. Marquee Bar
+   ============================================================ */
+.marquee-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 600;
+    overflow: hidden;
+    height: var(--marquee-h);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: rgba(2,4,6,0.75);
+    backdrop-filter: blur(16px);
+}
+
+.marquee-track {
+    display: flex;
+    gap: 2.5rem;
+    white-space: nowrap;
+    animation: marquee 38s linear infinite;
+    font-family: var(--font-mono);
+    font-size: 0.50rem;
+    font-weight: 300;
+    letter-spacing: 0.30em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+}
+
+.marquee-sep {
+    color: rgba(201, 168, 76, 0.35);
+    font-size: 0.42rem;
+}
+
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+
+/* ============================================================
+   10. Header & Navigation
+   ============================================================ */
+.site-header {
+    position: fixed;
+    top: var(--marquee-h);
+    left: 0; right: 0;
+    z-index: 500;
+    padding: 0 clamp(1.5rem, 5vw, 4.5rem);
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(
+        to bottom,
+        rgba(2,4,6,0.88) 0%,
+        rgba(2,4,6,0.50) 60%,
+        transparent 100%
+    );
+}
+
+.header-line {
+    position: absolute;
+    bottom: 0;
+    left: clamp(1.5rem, 5vw, 4.5rem);
+    right: clamp(1.5rem, 5vw, 4.5rem);
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        var(--border) 15%,
+        var(--border) 85%,
+        transparent
+    );
+}
+
+/* Logo */
+.logo {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    letter-spacing: 0.16em;
+    color: var(--cream);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 2px;
+}
+
+.logo span { color: var(--cyan); }
+
+.logo::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width var(--dur-base) var(--ease-out);
+}
+
+.logo:hover::after { width: 100%; }
+
+/* Navigation */
+.site-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 0;
+}
+
+.site-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 1.0rem;
+    color: var(--cream-dim);
+    text-decoration: none;
+    font-size: 0.60rem;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    font-weight: 400;
+    position: relative;
+    transition: color var(--dur-base) var(--ease-out);
+    gap: 0.15rem;
+}
+
+.nav-num {
+    font-style: normal;
+    font-size: 0.45rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    opacity: 0.6;
+    transition: opacity var(--dur-base);
+}
+
+.site-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 1px;
+    background: var(--cyan);
+    transition: width var(--dur-base) var(--ease-out);
+}
+
+.site-nav a:hover,
+.site-nav a.is-active { color: var(--cream); }
+
+.site-nav a.is-active { color: var(--cyan); }
+
+.site-nav a:hover .nav-num,
+.site-nav a.is-active .nav-num { opacity: 1; }
+
+.site-nav a:hover::after,
+.site-nav a.is-active::after { width: calc(100% - 2rem); }
+
+
+/* ============================================================
+   11. Main Content
+   ============================================================ */

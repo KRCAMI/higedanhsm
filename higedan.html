@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official HIGE DANdism</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;700&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ====================================================
+         로더 (풀스크린 인트로 애니메이션)
+         ==================================================== -->
+    <div class="loader" id="loader" aria-hidden="true">
+        <div class="loader-badge">Official</div>
+        <div class="loader-title">
+            <span>H</span><span>I</span><span>G</span><span>E</span>
+            <span class="loader-gap"> </span>
+            <span>D</span><span>A</span><span>N</span><span>d</span><span>i</span><span>s</span><span>m</span>
+        </div>
+        <div class="loader-sub">ひげ男 · Since 2012 · Japan</div>
+        <div class="loader-bar"></div>
+    </div>
+
+    <!-- ====================================================
+         커스텀 커서
+         ==================================================== -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- ====================================================
+         파티클 캔버스
+         ==================================================== -->
+    <canvas class="particle-canvas" id="particleCanvas" aria-hidden="true"></canvas>
+
+    <!-- ====================================================
+         앰비언트 글로우
+         ==================================================== -->
+    <div class="ambient" aria-hidden="true"></div>
+
+    <!-- ====================================================
+         비디오 배경
+         ==================================================== -->
+    <div class="video-background" aria-hidden="true">
+        <div class="video-foreground" id="youtubeLayer">
+            <div id="player"></div>
+        </div>
+        <div class="video-foreground video-foreground--local" id="localLayer" hidden>
+            <video id="localPlayer" loop playsinline muted></video>
+        </div>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- ====================================================
+         마르키 배너
+         ==================================================== -->
+    <div class="marquee-bar" aria-hidden="true">
+        <div class="marquee-track">
+            <span>Official HIGE DANdism</span>
+            <span class="marquee-sep" aria-hidden="true">◆</span>
+            <span>ひげ男</span>
+            <span class="marquee-sep" aria-hidden="true">◆</span>
+            <span>Same Blue</span>
+            <span class="marquee-sep" aria-hidden="true">◆</span>
+            <span>ESCAPARADE</span>
+            <span class="marquee-sep" aria-hidden="true">◆</span>
+            <span>TRAVELER</span>
+            <span class="marquee-sep" aria-hidden="true">◆</span>
+            <span>Editorial</span>
+            <span class="marquee-sep" aria-hidden="true">◆</span>
+            <span>Rejoice</span>
+            <span class="marquee-sep" aria-hidden="true">◆</span>
+            <span>Official HIGE DANdism</span>
+            <span class="marquee-sep" aria-hidden="true">◆</span>
+            <span>ひげ男</span>
+            <span class="marquee-sep" aria-hidden="true">◆</span>
+            <span>Same Blue</span>
+            <span class="marquee-sep" aria-hidden="true">◆</span>
+            <span>ESCAPARADE</span>
+            <span class="marquee-sep" aria-hidden="true">◆</span>
+            <span>TRAVELER</span>
+            <span class="marquee-sep" aria-hidden="true">◆</span>
+            <span>Editorial</span>
+            <span class="marquee-sep" aria-hidden="true">◆</span>
+            <span>Rejoice</span>
+            <span class="marquee-sep" aria-hidden="true">◆</span>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         헤더 & 내비게이션
+         ==================================================== -->
+    <header class="site-header">
+        <div class="logo">HIGE<span>DAN</span></div>
+
+        <nav class="site-nav" aria-label="메인 내비게이션">
+            <ul>
+                <li><a href="#" data-section="history"><em class="nav-num">01</em>History</a></li>
+                <li><a href="#" data-section="albums"><em class="nav-num">02</em>Albums</a></li>
+                <li><a href="#" data-section="singles"><em class="nav-num">03</em>Singles</a></li>
+                <li><a href="#" data-section="concerts"><em class="nav-num">04</em>Concerts</a></li>
+                <li><a href="#" data-section="members"><em class="nav-num">05</em>Members</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-line" aria-hidden="true"></div>
+    </header>
+
+
+    <!-- ====================================================
+         메인 콘텐츠
+         ==================================================== -->
+    <main id="content-area">
+
+        <!-- HOME -->
+        <section id="home" class="section section--active">
+            <div class="home-eyebrow">Official HIGE DANdism</div>
+            <h1 class="home-title" id="homeTitle"><span class="home-title-label">Official</span>髭男dism</h1>
+            <p class="home-sub" lang="ja">ひげ男の音楽で世界が染まる</p>
+            <a href="#" class="home-cta" data-section="albums">
+                <span>Discography</span>
+                <svg width="16" height="10" viewBox="0 0 18 10" fill="none" aria-hidden="true">
+                    <path d="M0 5H16M11 1L16 5L11 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+            </a>
+            <div class="home-scroll-hint" id="scrollHint" aria-hidden="true">
+                <span class="scroll-label">scroll</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+
+
+        <!-- ================================================================
+             홈 스크롤 멤버 섹션 (#home-members-wrap)
+             - 홈 화면 아래에 위치, JS가 .is-visible 추가 시 나타남
+             - IntersectionObserver로 각 카드 순차 등장
+             - 멤버 추가/수정: 아래 .member-card article 블록 복사
+             ================================================================ -->
+        <div id="home-members-wrap" role="region" aria-label="밴드 멤버 소개">
+
+            <!-- 섹션 헤딩 -->
+            <div class="hm-heading" id="hmHeading">
+                <span class="hm-eyebrow">Band Members</span>
+                <h2 class="hm-title">Official HIGE <em>DANdism</em></h2>
+                <p class="hm-sub">ひげ男 · 4 Members · Since 2012</p>
+            </div>
+
+            <!-- ── 01. 후지하라 사토시 ────────────────────────────────────
+                 담당: 보컬, 피아노, 키보드, 퍼커션
+                 멤버 정보 수정 시: .member-info__row dd 의 텍스트만 변경
+                 아이콘 변경 시: .member-photo__icon 내 SVG 교체
+                 ─────────────────────────────────────────────────────── -->
+            <article class="member-card">
+                <div class="member-photo">
+                    <div class="member-photo__inner">
+                        <div class="member-photo__num">01</div>
+                        <svg class="member-photo__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <!-- 피아노 건반 -->
+                            <rect x="10" y="34" width="60" height="32" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                            <line x1="22" y1="34" x2="22" y2="66" stroke="currentColor" stroke-width="1"/>
+                            <line x1="34" y1="34" x2="34" y2="66" stroke="currentColor" stroke-width="1"/>
+                            <line x1="46" y1="34" x2="46" y2="66" stroke="currentColor" stroke-width="1"/>
+                            <line x1="58" y1="34" x2="58" y2="66" stroke="currentColor" stroke-width="1"/>
+                            <rect x="17" y="34" width="8" height="18" rx="1" fill="currentColor" opacity="0.45"/>
+                            <rect x="29" y="34" width="8" height="18" rx="1" fill="currentColor" opacity="0.45"/>
+                            <rect x="41" y="34" width="8" height="18" rx="1" fill="currentColor" opacity="0.45"/>
+                            <rect x="53" y="34" width="8" height="18" rx="1" fill="currentColor" opacity="0.45"/>
+                            <!-- 마이크 -->
+                            <ellipse cx="40" cy="14" rx="6" ry="8" stroke="currentColor" stroke-width="1.5"/>
+                            <line x1="40" y1="22" x2="40" y2="30" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M34 27 Q34 32 40 32 Q46 32 46 27" stroke="currentColor" stroke-width="1" fill="none" opacity="0.6"/>
+                        </svg>
+                        <p class="member-photo__role">Vocal &amp; Piano</p>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <div class="member-info__badge">藤原 聡</div>
+                    <h3 class="member-info__name">후지하라 사토시</h3>
+                    <div class="member-info__divider"></div>
+                    <dl class="member-info__list">
+                        <div class="member-info__row">
+                            <dt>담당</dt>
+                            <dd>보컬 · 피아노 · 키보드 · 퍼커션</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>출생</dt>
+                            <dd>1993년 4월 9일 · 돗토리현</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>특징</dt>
+                            <dd>밴드의 주 작사·작곡 담당. 유치원 때부터 클래식 피아노를 배웠으며, 밴드 결성 후 보컬을 시작. 히게단 음악의 중심.</dd>
+                        </div>
+                    </dl>
+                </div>
+            </article>
+
+            <!-- ── 02. 오자사 다이스케 ──────────────────────────────────── -->
+            <article class="member-card">
+                <div class="member-photo">
+                    <div class="member-photo__inner">
+                        <div class="member-photo__num">02</div>
+                        <svg class="member-photo__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <!-- 기타 보디 -->
+                            <ellipse cx="40" cy="54" rx="14" ry="16" stroke="currentColor" stroke-width="1.5"/>
+                            <ellipse cx="40" cy="54" rx="5" ry="5" stroke="currentColor" stroke-width="1"/>
+                            <!-- 기타 넥 -->
+                            <line x1="40" y1="8" x2="40" y2="38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <rect x="33" y="8" width="14" height="7" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                            <line x1="36" y1="38" x2="44" y2="38" stroke="currentColor" stroke-width="1.5"/>
+                            <!-- 프렛 -->
+                            <line x1="32" y1="22" x2="48" y2="22" stroke="currentColor" stroke-width="0.8" opacity="0.5"/>
+                            <line x1="32" y1="28" x2="48" y2="28" stroke="currentColor" stroke-width="0.8" opacity="0.5"/>
+                            <line x1="33" y1="34" x2="47" y2="34" stroke="currentColor" stroke-width="0.8" opacity="0.5"/>
+                        </svg>
+                        <p class="member-photo__role">Guitar</p>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <div class="member-info__badge">小笹 大輔</div>
+                    <h3 class="member-info__name">오자사 다이스케</h3>
+                    <div class="member-info__divider"></div>
+                    <dl class="member-info__list">
+                        <div class="member-info__row">
+                            <dt>담당</dt>
+                            <dd>기타 · 코러스</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>출생</dt>
+                            <dd>1994년 9월 14일 · 시마네현</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>특징</dt>
+                            <dd>사토시와 라이브하우스에서 처음 만남. 함께 헤비메탈을 좋아하며 인연을 맺은 기타 히어로. 마쓰에 공업고등전문학교 출신.</dd>
+                        </div>
+                    </dl>
+                </div>
+            </article>
+
+            <!-- ── 03. 나라자키 마코토 ──────────────────────────────────── -->
+            <article class="member-card">
+                <div class="member-photo">
+                    <div class="member-photo__inner">
+                        <div class="member-photo__num">03</div>
+                        <svg class="member-photo__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <!-- 베이스 보디 -->
+                            <ellipse cx="38" cy="57" rx="13" ry="14" stroke="currentColor" stroke-width="1.5"/>
+                            <ellipse cx="38" cy="57" rx="4" ry="4" stroke="currentColor" stroke-width="1"/>
+                            <!-- 긴 넥 (베이스 특징) -->
+                            <line x1="38" y1="6" x2="38" y2="43" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <rect x="32" y="6" width="12" height="7" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                            <line x1="34" y1="43" x2="42" y2="43" stroke="currentColor" stroke-width="1.5"/>
+                            <!-- 색소폰 벨 (나라자키 색소폰도 담당) -->
+                            <path d="M53 42 Q63 50 59 62" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.65"/>
+                            <ellipse cx="57" cy="63" rx="5" ry="3" stroke="currentColor" stroke-width="1" opacity="0.65"/>
+                        </svg>
+                        <p class="member-photo__role">Bass &amp; Sax</p>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <div class="member-info__badge">楢﨑 誠</div>
+                    <h3 class="member-info__name">나라자키 마코토</h3>
+                    <div class="member-info__divider"></div>
+                    <dl class="member-info__list">
+                        <div class="member-info__row">
+                            <dt>담당</dt>
+                            <dd>베이스 · 색소폰</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>출생</dt>
+                            <dd>1987년 8월 26일 · 시마네현</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>특징</dt>
+                            <dd>밴드명 'Official髭男dism'을 직접 지은 멤버. 만화 마니아. 시마네 대학 경음부 4학년 선배로 사토시의 권유로 밴드에 합류.</dd>
+                        </div>
+                    </dl>
+                </div>
+            </article>
+
+            <!-- ── 04. 마츠우라 마사키 ──────────────────────────────────── -->
+            <article class="member-card">
+                <div class="member-photo">
+                    <div class="member-photo__inner">
+                        <div class="member-photo__num">04</div>
+                        <svg class="member-photo__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <!-- 베이스 드럼 -->
+                            <ellipse cx="40" cy="56" rx="18" ry="10" stroke="currentColor" stroke-width="1.5"/>
+                            <line x1="22" y1="56" x2="22" y2="46" stroke="currentColor" stroke-width="1.5"/>
+                            <line x1="58" y1="56" x2="58" y2="46" stroke="currentColor" stroke-width="1.5"/>
+                            <ellipse cx="40" cy="46" rx="18" ry="6" stroke="currentColor" stroke-width="1.5"/>
+                            <!-- 탐탐 -->
+                            <ellipse cx="22" cy="36" rx="9" ry="5" stroke="currentColor" stroke-width="1.2"/>
+                            <line x1="13" y1="36" x2="13" y2="28" stroke="currentColor" stroke-width="1.2"/>
+                            <line x1="31" y1="36" x2="31" y2="28" stroke="currentColor" stroke-width="1.2"/>
+                            <ellipse cx="22" cy="28" rx="9" ry="3.5" stroke="currentColor" stroke-width="1" opacity="0.7"/>
+                            <!-- 심벌 -->
+                            <line x1="54" y1="18" x2="70" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+                            <line x1="62" y1="18" x2="62" y2="30" stroke="currentColor" stroke-width="1" opacity="0.55"/>
+                            <!-- 드럼 스틱 -->
+                            <line x1="56" y1="10" x2="70" y2="24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+                        </svg>
+                        <p class="member-photo__role">Drums</p>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <div class="member-info__badge">松浦 匡希</div>
+                    <h3 class="member-info__name">마츠우라 마사키</h3>
+                    <div class="member-info__divider"></div>
+                    <dl class="member-info__list">
+                        <div class="member-info__row">
+                            <dt>담당</dt>
+                            <dd>드럼</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>출생</dt>
+                            <dd>1993년 7월 4일 · 시마네현</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>특징</dt>
+                            <dd>고등학교 취주악부 출신 퍼커션. 시마네 대학 경음부 후배로 합류. 4컷 만화 연재를 즐기는 개성파 드러머.</dd>
+                        </div>
+                    </dl>
+                </div>
+            </article>
+        </div>
+
+
+        <!-- ================================================================
+             멤버 섹션 (#members) — 네비게이션 "05 Members" 클릭 시 진입
+             내용은 홈 스크롤과 동일하나, .section 레이아웃 사용
+             ================================================================ -->
+        <section id="members" class="section">
+            <button class="back-btn" data-section="home" aria-label="홈으로">← Back</button>
+            <header class="sec-header">
+                <span class="sec-number">05 /</span>
+                <h2 class="sec-title">Band <em>Members</em></h2>
+            </header>
+
+            <!-- ── 01. 후지하라 사토시 ────────────────────────────────────
+                 담당: 보컬, 피아노, 키보드, 퍼커션
+                 멤버 정보 수정 시: .member-info__row dd 의 텍스트만 변경
+                 아이콘 변경 시: .member-photo__icon 내 SVG 교체
+                 ─────────────────────────────────────────────────────── -->
+            <article class="member-card">
+                <div class="member-photo">
+                    <div class="member-photo__inner">
+                        <div class="member-photo__num">01</div>
+                        <svg class="member-photo__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <!-- 피아노 건반 -->
+                            <rect x="10" y="34" width="60" height="32" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                            <line x1="22" y1="34" x2="22" y2="66" stroke="currentColor" stroke-width="1"/>
+                            <line x1="34" y1="34" x2="34" y2="66" stroke="currentColor" stroke-width="1"/>
+                            <line x1="46" y1="34" x2="46" y2="66" stroke="currentColor" stroke-width="1"/>
+                            <line x1="58" y1="34" x2="58" y2="66" stroke="currentColor" stroke-width="1"/>
+                            <rect x="17" y="34" width="8" height="18" rx="1" fill="currentColor" opacity="0.45"/>
+                            <rect x="29" y="34" width="8" height="18" rx="1" fill="currentColor" opacity="0.45"/>
+                            <rect x="41" y="34" width="8" height="18" rx="1" fill="currentColor" opacity="0.45"/>
+                            <rect x="53" y="34" width="8" height="18" rx="1" fill="currentColor" opacity="0.45"/>
+                            <!-- 마이크 -->
+                            <ellipse cx="40" cy="14" rx="6" ry="8" stroke="currentColor" stroke-width="1.5"/>
+                            <line x1="40" y1="22" x2="40" y2="30" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M34 27 Q34 32 40 32 Q46 32 46 27" stroke="currentColor" stroke-width="1" fill="none" opacity="0.6"/>
+                        </svg>
+                        <p class="member-photo__role">Vocal &amp; Piano</p>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <div class="member-info__badge">藤原 聡</div>
+                    <h3 class="member-info__name">후지하라 사토시</h3>
+                    <div class="member-info__divider"></div>
+                    <dl class="member-info__list">
+                        <div class="member-info__row">
+                            <dt>담당</dt>
+                            <dd>보컬 · 피아노 · 키보드 · 퍼커션</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>출생</dt>
+                            <dd>1993년 4월 9일 · 돗토리현</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>특징</dt>
+                            <dd>밴드의 주 작사·작곡 담당. 유치원 때부터 클래식 피아노를 배웠으며, 밴드 결성 후 보컬을 시작. 히게단 음악의 중심.</dd>
+                        </div>
+                    </dl>
+                </div>
+            </article>
+
+            <!-- ── 02. 오자사 다이스케 ──────────────────────────────────── -->
+            <article class="member-card">
+                <div class="member-photo">
+                    <div class="member-photo__inner">
+                        <div class="member-photo__num">02</div>
+                        <svg class="member-photo__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <!-- 기타 보디 -->
+                            <ellipse cx="40" cy="54" rx="14" ry="16" stroke="currentColor" stroke-width="1.5"/>
+                            <ellipse cx="40" cy="54" rx="5" ry="5" stroke="currentColor" stroke-width="1"/>
+                            <!-- 기타 넥 -->
+                            <line x1="40" y1="8" x2="40" y2="38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <rect x="33" y="8" width="14" height="7" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                            <line x1="36" y1="38" x2="44" y2="38" stroke="currentColor" stroke-width="1.5"/>
+                            <!-- 프렛 -->
+                            <line x1="32" y1="22" x2="48" y2="22" stroke="currentColor" stroke-width="0.8" opacity="0.5"/>
+                            <line x1="32" y1="28" x2="48" y2="28" stroke="currentColor" stroke-width="0.8" opacity="0.5"/>
+                            <line x1="33" y1="34" x2="47" y2="34" stroke="currentColor" stroke-width="0.8" opacity="0.5"/>
+                        </svg>
+                        <p class="member-photo__role">Guitar</p>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <div class="member-info__badge">小笹 大輔</div>
+                    <h3 class="member-info__name">오자사 다이스케</h3>
+                    <div class="member-info__divider"></div>
+                    <dl class="member-info__list">
+                        <div class="member-info__row">
+                            <dt>담당</dt>
+                            <dd>기타 · 코러스</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>출생</dt>
+                            <dd>1994년 9월 14일 · 시마네현</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>특징</dt>
+                            <dd>사토시와 라이브하우스에서 처음 만남. 함께 헤비메탈을 좋아하며 인연을 맺은 기타 히어로. 마쓰에 공업고등전문학교 출신.</dd>
+                        </div>
+                    </dl>
+                </div>
+            </article>
+
+            <!-- ── 03. 나라자키 마코토 ──────────────────────────────────── -->
+            <article class="member-card">
+                <div class="member-photo">
+                    <div class="member-photo__inner">
+                        <div class="member-photo__num">03</div>
+                        <svg class="member-photo__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <!-- 베이스 보디 -->
+                            <ellipse cx="38" cy="57" rx="13" ry="14" stroke="currentColor" stroke-width="1.5"/>
+                            <ellipse cx="38" cy="57" rx="4" ry="4" stroke="currentColor" stroke-width="1"/>
+                            <!-- 긴 넥 (베이스 특징) -->
+                            <line x1="38" y1="6" x2="38" y2="43" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <rect x="32" y="6" width="12" height="7" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                            <line x1="34" y1="43" x2="42" y2="43" stroke="currentColor" stroke-width="1.5"/>
+                            <!-- 색소폰 벨 (나라자키 색소폰도 담당) -->
+                            <path d="M53 42 Q63 50 59 62" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.65"/>
+                            <ellipse cx="57" cy="63" rx="5" ry="3" stroke="currentColor" stroke-width="1" opacity="0.65"/>
+                        </svg>
+                        <p class="member-photo__role">Bass &amp; Sax</p>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <div class="member-info__badge">楢﨑 誠</div>
+                    <h3 class="member-info__name">나라자키 마코토</h3>
+                    <div class="member-info__divider"></div>
+                    <dl class="member-info__list">
+                        <div class="member-info__row">
+                            <dt>담당</dt>
+                            <dd>베이스 · 색소폰</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>출생</dt>
+                            <dd>1987년 8월 26일 · 시마네현</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>특징</dt>
+                            <dd>밴드명 'Official髭男dism'을 직접 지은 멤버. 만화 마니아. 시마네 대학 경음부 4학년 선배로 사토시의 권유로 밴드에 합류.</dd>
+                        </div>
+                    </dl>
+                </div>
+            </article>
+
+            <!-- ── 04. 마츠우라 마사키 ──────────────────────────────────── -->
+            <article class="member-card">
+                <div class="member-photo">
+                    <div class="member-photo__inner">
+                        <div class="member-photo__num">04</div>
+                        <svg class="member-photo__icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <!-- 베이스 드럼 -->
+                            <ellipse cx="40" cy="56" rx="18" ry="10" stroke="currentColor" stroke-width="1.5"/>
+                            <line x1="22" y1="56" x2="22" y2="46" stroke="currentColor" stroke-width="1.5"/>
+                            <line x1="58" y1="56" x2="58" y2="46" stroke="currentColor" stroke-width="1.5"/>
+                            <ellipse cx="40" cy="46" rx="18" ry="6" stroke="currentColor" stroke-width="1.5"/>
+                            <!-- 탐탐 -->
+                            <ellipse cx="22" cy="36" rx="9" ry="5" stroke="currentColor" stroke-width="1.2"/>
+                            <line x1="13" y1="36" x2="13" y2="28" stroke="currentColor" stroke-width="1.2"/>
+                            <line x1="31" y1="36" x2="31" y2="28" stroke="currentColor" stroke-width="1.2"/>
+                            <ellipse cx="22" cy="28" rx="9" ry="3.5" stroke="currentColor" stroke-width="1" opacity="0.7"/>
+                            <!-- 심벌 -->
+                            <line x1="54" y1="18" x2="70" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+                            <line x1="62" y1="18" x2="62" y2="30" stroke="currentColor" stroke-width="1" opacity="0.55"/>
+                            <!-- 드럼 스틱 -->
+                            <line x1="56" y1="10" x2="70" y2="24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+                        </svg>
+                        <p class="member-photo__role">Drums</p>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <div class="member-info__badge">松浦 匡希</div>
+                    <h3 class="member-info__name">마츠우라 마사키</h3>
+                    <div class="member-info__divider"></div>
+                    <dl class="member-info__list">
+                        <div class="member-info__row">
+                            <dt>담당</dt>
+                            <dd>드럼</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>출생</dt>
+                            <dd>1993년 7월 4일 · 시마네현</dd>
+                        </div>
+                        <div class="member-info__row">
+                            <dt>특징</dt>
+                            <dd>고등학교 취주악부 출신 퍼커션. 시마네 대학 경음부 후배로 합류. 4컷 만화 연재를 즐기는 개성파 드러머.</dd>
+                        </div>
+                    </dl>
+                </div>
+            </article>
+        </section>
+
+
+        <!-- HISTORY -->
+        <section id="history" class="section">
+            <button class="back-btn" data-section="home" aria-label="홈으로">← Back</button>
+            <header class="sec-header">
+                <span class="sec-number">01 /</span>
+                <h2 class="sec-title">Band <em>History</em></h2>
+            </header>
+            <div class="timeline" role="list">
+                <div class="tl-item" role="listitem">
+                    <div class="tl-dot" aria-hidden="true"></div>
+                    <time class="tl-year" datetime="2012">2012</time>
+                    <p class="tl-text">시마네 현 마쓰에시에서 결성. 보컬 후지하라 사토루를 중심으로 4인조 밴드로 출발, 인디 활동 시작.</p>
+                </div>
+                <div class="tl-item" role="listitem">
+                    <div class="tl-dot" aria-hidden="true"></div>
+                    <time class="tl-year" datetime="2018">2018</time>
+                    <p class="tl-text">메이저 데뷔 싱글 "이노치ノ証 / ビンテージ" 발매. 동시에 1st 미니 앨범 《MAN IN THE MIRROR》 발매.</p>
+                </div>
+                <div class="tl-item" role="listitem">
+                    <div class="tl-dot" aria-hidden="true"></div>
+                    <time class="tl-year" datetime="2019">2019</time>
+                    <p class="tl-text">애니메이션 『Fate/Grand Order』 주제가 "Pretender" 발매, 일본 전국구 히트. 스트리밍 수억 재생 기록.</p>
+                </div>
+                <div class="tl-item" role="listitem">
+                    <div class="tl-dot" aria-hidden="true"></div>
+                    <time class="tl-year" datetime="2021">2021–22</time>
+                    <p class="tl-text">2nd 앨범 《Editorial》 발매 후 전국 투어, 국내외 페스티벌 헤드라이너로 활약. 아시아 팬덤 폭발적 확대.</p>
+                </div>
+                <div class="tl-item" role="listitem">
+                    <div class="tl-dot" aria-hidden="true"></div>
+                    <time class="tl-year" datetime="2024">2024</time>
+                    <p class="tl-text">3rd 앨범 《Same Blue》 발매. 더욱 진화된 사운드와 서정적인 가사로 높은 완성도를 인정받으며 활발히 활동 중.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ALBUMS -->
+        <section id="albums" class="section">
+            <button class="back-btn" data-section="home" aria-label="홈으로">← Back</button>
+            <header class="sec-header">
+                <span class="sec-number">02 /</span>
+                <h2 class="sec-title">Disco<em>graphy</em></h2>
+            </header>
+            <div class="album-grid" id="albumGrid" role="list"></div>
+            <div id="albumDetail" class="album-detail" hidden>
+                <button class="back-btn back-btn--detail" id="detailBackBtn" aria-label="앨범 목록으로">← Back to Albums</button>
+                <div class="detail-header">
+                    <div class="album-thumb" id="detailThumb"></div>
+                    <div class="detail-meta">
+                        <h3 class="detail-name" id="detailName"></h3>
+                        <p class="detail-info" id="detailInfo"></p>
+                    </div>
+                </div>
+                <div class="track-list" id="trackList" role="list"></div>
+            </div>
+            <div class="pagination" id="pagination" role="navigation" aria-label="앨범 페이지"></div>
+        </section>
+
+
+        <!-- SINGLES -->
+        <section id="singles" class="section">
+            <button class="back-btn" data-section="home" aria-label="홈으로">← Back</button>
+            <header class="sec-header">
+                <span class="sec-number">03 /</span>
+                <h2 class="sec-title">Single <em>Music</em></h2>
+            </header>
+            <div class="track-list" id="singleTrackList" role="list"></div>
+        </section>
+
+
+        <!-- CONCERTS -->
+        <section id="concerts" class="section">
+            <button class="back-btn" data-section="home" aria-label="홈으로">← Back</button>
+            <header class="sec-header">
+                <span class="sec-number">04 /</span>
+                <h2 class="sec-title">Asia <em>Tour 2026</em></h2>
+            </header>
+            <div class="concert-list" id="concertList" role="list"></div>
+        </section>
+
+    </main>
+
+    <!-- ====================================================
+         소셜 링크
+         ==================================================== -->
+    <div class="social-links" role="group" aria-label="소셜 미디어 링크">
+        <a href="https://www.instagram.com/officialhigedandism/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        <a href="https://twitter.com/officialhige" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 4.07H5.078z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@official_hige_dandism" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+        </a>
+        <a href="https://www.youtube.com/channel/UC3vg17IZ1IV73xx069jG44w" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+        </a>
+    </div>
+
+    <!-- ====================================================
+         음악 컨트롤
+         ==================================================== -->
+    <div class="music-controls" role="group" aria-label="음악 컨트롤">
+        <button class="music-btn music-btn--muted" id="musicBtn" aria-label="음소거 해제" aria-pressed="true">
+            <svg class="icon-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <line x1="23" y1="9" x2="17" y2="15"/>
+                <line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+            <svg class="icon-unmuted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
+            </svg>
+        </button>
+        <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="100" aria-label="볼륨">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
