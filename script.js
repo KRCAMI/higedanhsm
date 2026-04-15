@@ -836,5 +836,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initMembersScroll();   // 스크롤 멤버 카드 IntersectionObserver 등록
 });
+document.addEventListener('DOMContentLoaded', () => {
+  const enterBtn = document.getElementById('enter-btn');
+  const introScreen = document.getElementById('intro-screen');
+  const bgm = document.getElementById('myAudio');
 
+  // 입장 버튼을 클릭했을 때
+  enterBtn.addEventListener('click', () => {
+    // 1. 음악을 재생합니다.
+    bgm.play();
+    
+    // 2. 인트로 화면을 부드럽게 사라지게 합니다.
+    introScreen.classList.add('fade-out');
+    
+    // 3. (선택사항) 일정 시간 뒤에 인트로 화면을 HTML에서 완전히 숨김
+    setTimeout(() => {
+      introScreen.style.display = 'none';
+    }, 800);
+  });
+});
 
