@@ -809,49 +809,54 @@ function initMembersScroll() {
     });
 }
 /* ============================================================
-   13. 초기화
+   13. 초기화 및 이벤트 등록
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
 
-    initLoader();                        // 로더 애니메이션 후 숨김
-    initParticles();                     // 파티클 캔버스 시작
-    initCursor();                        // 커스텀 커서 시작
-    initYouTube();                       // 유튜브 API 스크립트 삽입
-    initEvents();                        // 이벤트 위임 등록
-    renderAlbums(state.currentPage);     // 앨범 그리드 초기 렌더링
+    // --- [1] 웹사이트 기본 기능 초기화 ---
+    initLoader();                        // 2초 후 지금 멈춰있는 로딩 화면을 숨김
+    initParticles();                     // 배경 파티클 효과 시작
+    initCursor();                        // 사라진 마우스 커서를 그려줌! (중요)
+    initYouTube();                       // 유튜브 API 로드
+    initEvents();                        // 클릭/스크롤 이벤트 등록
+    renderAlbums(state.currentPage);     // 앨범 목록 렌더링
 
-    setVolume(100);                      // 볼륨 초기화
+    setVolume(100);                      // 초기 볼륨 세팅
 
-    // 🎯 첫 화면 배경 영상 설정 (타이틀은 髭男dism 기본값 유지)
-    //playTrack(null, 'videos/higedanop.mp4', null);
+    // 첫 화면 텍스트 및 곡 세팅 (Same Blue)
+    playTrack('d0jg9hNHqn8', null, 'Same Blue');
 
-    // 💡 유튜브 영상으로 변경하려면:
-     playTrack('d0jg9hNHqn8', null, 'Same Blue');
-
-    // ── 홈 진입 시 main 스크롤 모드 활성화 (초기 상태: home이 활성) ──
+    // 홈 화면 스크롤 레이아웃 세팅
     const mainEl = document.getElementById('content-area');
     if (mainEl) mainEl.classList.add('home-is-active');
     const hmWrap = document.getElementById('home-members-wrap');
     if (hmWrap) hmWrap.classList.add('is-visible');
 
-    initMembersScroll();   // 스크롤 멤버 카드 IntersectionObserver 등록
-});
-document.addEventListener('DOMContentLoaded', () => {
-  const enterBtn = document.getElementById('enter-btn');
-  const introScreen = document.getElementById('intro-screen');
-  const bgm = document.getElementById('myAudio');
+    initMembersScroll();                 // 멤버 스크롤 애니메이션 준비
 
-  // 입장 버튼을 클릭했을 때
-  enterBtn.addEventListener('click', () => {
-    // 1. 음악을 재생합니다.
-    bgm.play();
-    
-    // 2. 인트로 화면을 부드럽게 사라지게 합니다.
-    introScreen.classList.add('fade-out');
-    
-    // 3. (선택사항) 일정 시간 뒤에 인트로 화면을 HTML에서 완전히 숨김
-    setTimeout(() => {
-      introScreen.style.display = 'none';
-    }, 800);
-  });
+
+    // --- [2] ENTER SITE 입장 버튼 클릭 이벤트 ---
+    const enterBtn = document.getElementById('enter-btn');
+    const introScreen = document.getElementById('intro-screen');
+
+    if (enterBtn && introScreen) {
+        enterBtn.addEventListener('click', () => {
+            
+            // 1. 유튜브 객체를 사용해 재생 및 음소거 해제
+            if (state.ytPlayer && typeof state.ytPlayer.playVideo === 'function') {
+                state.ytPlayer.unMute();
+                state.ytPlayer.playVideo();
+                setVolume(100);
+                updateMuteBtn(false);
+            }
+            
+            // 2. 인트로 화면을 부드럽게 사라지게 함
+            introScreen.classList.add('fade-out');
+            
+            // 3. 인트로 화면 HTML 요소 숨김
+            setTimeout(() => {
+                introScreen.style.display = 'none';
+            }, 800);
+        });
+    }
 });
