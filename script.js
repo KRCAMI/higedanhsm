@@ -823,10 +823,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setVolume(100);                      // 볼륨 초기화
 
     // 🎯 첫 화면 배경 영상 설정 (타이틀은 髭男dism 기본값 유지)
-    playTrack(null, 'videos/higedanop.mp4', null);
+    //playTrack(null, 'videos/higedanop.mp4', null);
 
     // 💡 유튜브 영상으로 변경하려면:
-    // playTrack('d0jg9hNHqn8', null, 'Same Blue');
+     playTrack('d0jg9hNHqn8', null, 'Same Blue');
 
     // ── 홈 진입 시 main 스크롤 모드 활성화 (초기 상태: home이 활성) ──
     const mainEl = document.getElementById('content-area');
